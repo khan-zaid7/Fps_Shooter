@@ -23,7 +23,15 @@ public class PlayerMovement : MonoBehaviour
     public Transform tr;
     public CharacterController ch;
 
-    public float moveSpeed;
+    [SerializeField]
+    private float walkSpeed;
+
+    [SerializeField]
+    private  float runSpeed;
+
+    private float moveSpeed;
+
+    private bool isRunning;
 
     public float gravityForce = 9.8f;
 
@@ -77,6 +85,23 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 move = transform.right * h_input + transform.forward * v_input ;
 
+        if(getRunKey())
+        {
+            isRunning = !isRunning;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            isRunning = !isRunning;
+        }
+
+        if(isRunning)
+        {
+            moveSpeed = runSpeed;
+        }
+        else 
+        {
+            moveSpeed = walkSpeed;
+        }
         ch.Move(move * moveSpeed * Time.deltaTime);
     }
 
@@ -98,5 +123,10 @@ public class PlayerMovement : MonoBehaviour
     void GroundCheck()
     {
         isGrounded = Physics.CheckSphere(GroundCheckPosition.position, sphereRadious, Ground);
+    }
+
+    bool getRunKey()
+    {
+       return Input.GetKeyDown(KeyCode.LeftShift);
     }
 }
