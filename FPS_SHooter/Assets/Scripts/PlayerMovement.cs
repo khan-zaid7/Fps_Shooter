@@ -38,11 +38,11 @@ public class PlayerMovement : MonoBehaviour
 
     //Speed of the player while walking
     [SerializeField]
-    private float walkSpeed;
+    private float walkSpeed = 3f;
 
     //Speed of the player while running
     [SerializeField]
-    private  float runSpeed;
+    private  float runSpeed = 8f;
 
     //Current speed of the player
     private float moveSpeed;
@@ -80,6 +80,12 @@ public class PlayerMovement : MonoBehaviour
     private float range;
 
 
+
+    //Camera Shake
+
+    [SerializeField]
+    private CameraShake cameraShake;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -92,10 +98,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         player_rotate();    
+
         player_move();
+
+        
         Gravity();
         GroundCheck();
         Climb();
+
     }
 
     void player_rotate()
@@ -116,8 +126,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void player_move()
-
     {
+        cameraShake.shouldShake = true;
         float h_input = Input.GetAxis("Horizontal");
         float v_input = Input.GetAxis("Vertical");
 
@@ -138,8 +148,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else 
         {
+
             moveSpeed = walkSpeed;
         }
+        
         ch.Move(move * moveSpeed * Time.deltaTime);
     }
 
