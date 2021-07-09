@@ -68,6 +68,18 @@ public class PlayerMovement : MonoBehaviour
     //the position where the sphere is instansiated
     public Transform GroundCheckPosition;
 
+
+
+    [SerializeField]
+    private float climbSpeed;
+
+    [SerializeField]
+    private float sticToWall;
+
+    [SerializeField]
+    private float range;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -83,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
         player_move();
         Gravity();
         GroundCheck();
+        Climb();
     }
 
     void player_rotate()
@@ -154,4 +167,30 @@ public class PlayerMovement : MonoBehaviour
     {
        return Input.GetKeyDown(KeyCode.LeftShift);
     }
+
+    void Climb()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, range))
+        {
+            if(hit.transform.tag == "climbObject")
+            {
+                if(Input.GetKey(KeyCode.Tab))
+                {
+                    gravityForce = 1f;
+                    Vector3 climb = transform.forward * sticToWall + transform.up * climbSpeed;
+
+                    ch.Move(climb * Time.deltaTime);
+
+                }
+            }
+        }
+        else
+        {
+            gravityForce = 9.8f;
+        }
+
+    }
+
+
 }
