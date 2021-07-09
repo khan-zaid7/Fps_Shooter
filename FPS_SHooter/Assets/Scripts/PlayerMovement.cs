@@ -6,48 +6,72 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
 
+    //Refrence to the Camera
     private Camera cam;
 
 
-
+    //Mouse Input On xAxis 
     private float mouseX;
+    
+    //Mouse Input On yAxis 
     private float mouseY;
 
-    public float horizontalSpeed;
-    public float verticalSpeed;
+    //Player Move Speed multiplier On the xAxis
+    [SerializeField]
+    private float horizontalSpeed;
 
+    //Player Move Speed multiplier On the zAxis
+    [SerializeField]
+    private float verticalSpeed;
 
+    //rotation of the player on the xAxis
     private float xRotation;
+
+    //rotation of the player on the yAxis
     private float yRotation;
 
+    //Refrence to the Player Game Object to rotate along the yAxis with camera
     public Transform tr;
+
+    //Refrence to the CharacterController component On the playerObject
     public CharacterController ch;
 
+    //Speed of the player while walking
     [SerializeField]
     private float walkSpeed;
 
+    //Speed of the player while running
     [SerializeField]
     private  float runSpeed;
 
+    //Current speed of the player
     private float moveSpeed;
 
+    //bool variable to check if player is Running
     private bool isRunning;
 
+    //Amount of Gravity Apply on the player every frame
     public float gravityForce = 9.8f;
 
+    //Vector3 velocity of player for jump and gravity
     private Vector3 velocity;
     
+    //Bool variable to check if player is on ground or not
     public bool isGrounded;
 
-    public LayerMask Ground;
+    //A refrence to the Ground layer
+    public LayerMask whatIsGround;
 
+    //the radious of the groundCheck sphere     
     private float sphereRadious = 0.4f;
 
+    //the position where the sphere is instansiated
     public Transform GroundCheckPosition;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         cam = Camera.main;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -64,8 +88,9 @@ public class PlayerMovement : MonoBehaviour
     void player_rotate()
 
     {
-        float mouseX = Input.GetAxis("Mouse X") * horizontalSpeed;
-        float mouseY = Input.GetAxis("Mouse Y") * verticalSpeed;
+        
+        mouseX = Input.GetAxis("Mouse X") * horizontalSpeed;
+        mouseY = Input.GetAxis("Mouse Y") * verticalSpeed;
 
 
         tr.Rotate(Vector3.up * mouseX);
@@ -122,7 +147,7 @@ public class PlayerMovement : MonoBehaviour
 
     void GroundCheck()
     {
-        isGrounded = Physics.CheckSphere(GroundCheckPosition.position, sphereRadious, Ground);
+        isGrounded = Physics.CheckSphere(GroundCheckPosition.position, sphereRadious, whatIsGround);
     }
 
     bool getRunKey()
