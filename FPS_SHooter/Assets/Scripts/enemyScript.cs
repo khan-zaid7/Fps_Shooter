@@ -2,26 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class enemyScript : MonoBehaviour
 {
-
     private float fullHealth = 50;
 
-    
-    public float currentHealth;
+    private float currentHealth;
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = fullHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Damage(int damage)
     {
-        
-        if (currentHealth <=0)
+        currentHealth -= damage;
+
+        if(currentHealth <=0)
         {
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
     }
 

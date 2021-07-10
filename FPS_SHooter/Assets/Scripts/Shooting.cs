@@ -6,15 +6,19 @@ public class Shooting : MonoBehaviour
 {
     private Camera cam;
 
-    private Transform muzzelPosition;
+
 
     [SerializeField]
     private float range;
 
     private RaycastHit hit;
 
-    
-    public Enemy enemy;
+    [SerializeField]
+    private Transform muzzelPosition;
+
+    private int enemyDamage = 10;
+
+
 
 
     // Start is called before the first frame update
@@ -26,14 +30,29 @@ public class Shooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        if(Input.GetMouseButtonDown(0) && Physics.Raycast(cam.transform.position, cam.transform.forward, out hit , range))
+        if(Input.GetButtonDown("Fire1"))
         {
-            if(hit.collider.tag == "Enemy")
+            shoot();
+        }
+    }
+
+   void shoot()
+    {
+        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit ,range))
+        {
+            
+            Vector3 hitPoint = hit.point;
+
+            enemyScript em = hit.transform.GetComponent<enemyScript>();
+            
+            if(em != null)
             {
-                enemy.currentHealth -= 10;
-                Debug.Log("Hit the enemy");
+                
+                em.Damage(enemyDamage);
+                
             }
+
+
         }
     }
 }
