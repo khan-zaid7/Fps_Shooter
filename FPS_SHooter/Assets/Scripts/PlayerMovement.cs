@@ -70,14 +70,6 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    [SerializeField]
-    private float climbSpeed;
-
-    [SerializeField]
-    private float sticToWall;
-
-    [SerializeField]
-    private float range;
 
     //Camera Shake
 
@@ -166,7 +158,7 @@ public class PlayerMovement : MonoBehaviour
         //if isRunning is true then move the player at the runSpeed
         if(isRunning)
         {
-            //Slightly increase the currentSpeed(moveSpeed) value to runSpeed value
+            //Slowly increase the currentSpeed(moveSpeed) value to runSpeed value
 
             moveSpeed = Mathf.Lerp(moveSpeed, runSpeed, 0.1f);
             
@@ -174,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
         //if isRunning is false move the player at walkSpeed
         else 
         {
-            //Slightly decrease the currentSpeed(moveSpeed) value to walkSpeed value
+            //Slowly decrease the currentSpeed(moveSpeed) value to walkSpeed value
             
             moveSpeed = Mathf.Lerp(moveSpeed,walkSpeed,0.1f);
         }
@@ -212,20 +204,14 @@ public class PlayerMovement : MonoBehaviour
 
     void shakeCameraOnMove()
     {
+        //the current position is the transform.position
         currentPosition = tr.position;
-
-        //??
-        playerSpeed = (currentPosition - lastPosition).magnitude / Time.deltaTime;
-        lastPosition = currentPosition;
         
-        if (playerSpeed>0)
-        {
-            cameraShake.shouldShake = true;
-        }
-        else
-        {
-            cameraShake.shouldShake = false;
-        }
+        //it reurns the speed of the player at each frame 
+        playerSpeed = (currentPosition - lastPosition).magnitude / Time.deltaTime;
+
+        //after getting the speed lastpositon becomes currentPosition
+        lastPosition = currentPosition;
     }
 
 
