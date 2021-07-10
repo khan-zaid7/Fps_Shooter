@@ -44,7 +44,7 @@ public class CameraShake : MonoBehaviour
         {
             if(duration>0)
             {
-                cam.transform.localPosition = initialCameraPosition + Random.insideUnitSphere * strength;
+                cam.transform.localPosition = Random.insideUnitCircle * strength;
                 duration -= slowDownDuration *Time.deltaTime;
             }
             else

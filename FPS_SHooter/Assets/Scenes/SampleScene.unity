@@ -16020,6 +16020,7 @@ MonoBehaviour:
   climbSpeed: 8
   sticToWall: 1
   range: 2
+  cameraShake: {fileID: 2095002988}
 --- !u!143 &2095002987
 CharacterController:
   m_ObjectHideFlags: 0
@@ -16050,7 +16051,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdcf4967755eb464ab5cc7c9261eada8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strength: 0.02
+  strength: 0.05
+  shouldShake: 0
 --- !u!1 &4371666988704422884
 GameObject:
   m_ObjectHideFlags: 0

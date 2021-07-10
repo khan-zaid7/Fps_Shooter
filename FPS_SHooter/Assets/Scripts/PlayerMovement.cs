@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
     public float gravityForce = 9.8f;
 
     //Vector3 velocity of player for jump and gravity
-    private Vector3 velocity;
+    private Vector3 Velocity;
     
     //Bool variable to check if player is on ground or not
     public bool isGrounded;
@@ -79,13 +79,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float range;
 
-
-
     //Camera Shake
 
     [SerializeField]
     private CameraShake cameraShake;
-
+    private float playerSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -104,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
         
         Gravity();
         GroundCheck();
-        Climb();
+       shakeCameraOnMove();
 
     }
 
@@ -127,7 +125,7 @@ public class PlayerMovement : MonoBehaviour
 
     void player_move()
     {
-        cameraShake.shouldShake = true;
+        
         float h_input = Input.GetAxis("Horizontal");
         float v_input = Input.GetAxis("Vertical");
 
@@ -135,15 +133,16 @@ public class PlayerMovement : MonoBehaviour
 
         if(getRunKey())
         {
-            isRunning = !isRunning;
+            isRunning = true;
         }
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            isRunning = !isRunning;
+            isRunning = false;
         }
 
         if(isRunning)
         {
+            moveSpeed = Mathf.Lerp(moveSpeed, runSpeed, 0.1f);
             moveSpeed = runSpeed;
         }
         else 
@@ -159,15 +158,15 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isGrounded)
         {
-            velocity.y = 0;
+            Velocity.y = 0;
 
         }
         else 
         {
-            velocity.y -= gravityForce * Time.deltaTime;
+            Velocity.y -= gravityForce * Time.deltaTime;
         }
 
-        ch.Move(velocity * Time.deltaTime);
+        ch.Move(Velocity * Time.deltaTime);
     }
 
     void GroundCheck()
@@ -180,29 +179,18 @@ public class PlayerMovement : MonoBehaviour
        return Input.GetKeyDown(KeyCode.LeftShift);
     }
 
-    void Climb()
+
+
+    void shakeCameraOnMove()
     {
-        RaycastHit hit;
-        if(Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, range))
-        {
-            if(hit.transform.tag == "climbObject")
-            {
-                if(Input.GetKey(KeyCode.Tab))
-                {
-                    gravityForce = 1f;
-                    Vector3 climb = transform.forward * sticToWall + transform.up * climbSpeed;
+        Vector3 horizontalVelocity = ch.velocity;
+         horizontalVelocity = new Vector3(ch.velocity.x,0,ch.velocity.z);
 
-                    ch.Move(climb * Time.deltaTime);
+        horizontalSpeed = horizontalVelocity.magnitude;
 
-                }
-            }
-        }
-        else
-        {
-            gravityForce = 9.8f;
-        }
-
+        Debug.Log(horizontalSpeed);
     }
 
 
 }
+ 
