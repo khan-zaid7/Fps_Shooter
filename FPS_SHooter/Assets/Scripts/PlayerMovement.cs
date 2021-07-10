@@ -84,12 +84,24 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private CameraShake cameraShake;
     private float playerSpeed;
-    // Start is called before the first frame update
+
+    private Vector3 lastPosition;
+    private Vector3 currentPosition;
+
+
     void Start()
     {
-        
+        //get refrence to the main camera Object
         cam = Camera.main;
+
+        //lock the cursor at the center 
         Cursor.lockState = CursorLockMode.Locked;
+
+        //currentPosition is the transform.position
+        currentPosition = tr.position;
+
+        //lastPosition is the transform.position
+        lastPosition = tr.position;
     }
 
     // Update is called once per frame
@@ -102,53 +114,69 @@ public class PlayerMovement : MonoBehaviour
         
         Gravity();
         GroundCheck();
-       shakeCameraOnMove();
+        shakeCameraOnMove();
 
     }
 
     void player_rotate()
 
     {
-        
+        //Get the mouse input on the xAxis
         mouseX = Input.GetAxis("Mouse X") * horizontalSpeed;
+
+        //Get the mouse input on the yAxis
         mouseY = Input.GetAxis("Mouse Y") * verticalSpeed;
 
-
+        //Rotate the player gameObject with the mouseX movement to face the camera's direction
         tr.Rotate(Vector3.up * mouseX);
+
+
         yRotation += mouseX;
         xRotation -= mouseY;
+
+        //prevent the player from facing up and down above and beyound -90 and 90
         xRotation = Mathf.Clamp(xRotation, -90, 90);
- 
+
+        //rotate the camera gameObject on the x and y axis 
         cam.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
-       
     }
 
+    //responsible for player movement 
     void player_move()
     {
-        
+        //Get the input on the xAxis from -1 to 1
         float h_input = Input.GetAxis("Horizontal");
+
+        //Get the input on the zAxis from -1 to 1
         float v_input = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * h_input + transform.forward * v_input ;
 
+        //if player press leftShift then isRunning = true until the player has pressed key
         if(getRunKey())
         {
             isRunning = true;
         }
+        //if the leftShift is released then isRunning = false
         else if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             isRunning = false;
         }
 
+        //if isRunning is true then move the player at the runSpeed
         if(isRunning)
         {
+            //Slightly increase the currentSpeed(moveSpeed) value to runSpeed value
+
             moveSpeed = Mathf.Lerp(moveSpeed, runSpeed, 0.1f);
-            moveSpeed = runSpeed;
+            
         }
+        //if isRunning is false move the player at walkSpeed
         else 
         {
-
-            moveSpeed = walkSpeed;
+            //Slightly decrease the currentSpeed(moveSpeed) value to walkSpeed value
+            
+            moveSpeed = Mathf.Lerp(moveSpeed,walkSpeed,0.1f);
         }
         
         ch.Move(move * moveSpeed * Time.deltaTime);
@@ -171,6 +199,7 @@ public class PlayerMovement : MonoBehaviour
 
     void GroundCheck()
     {
+        //create a sphere of radious = sphereRadius, at the position of groundCheckPosition, if the sphere collides with whatIsGround it returns true
         isGrounded = Physics.CheckSphere(GroundCheckPosition.position, sphereRadious, whatIsGround);
     }
 
@@ -183,12 +212,20 @@ public class PlayerMovement : MonoBehaviour
 
     void shakeCameraOnMove()
     {
-        Vector3 horizontalVelocity = ch.velocity;
-         horizontalVelocity = new Vector3(ch.velocity.x,0,ch.velocity.z);
+        currentPosition = tr.position;
 
-        horizontalSpeed = horizontalVelocity.magnitude;
-
-        Debug.Log(horizontalSpeed);
+        //??
+        playerSpeed = (currentPosition - lastPosition).magnitude / Time.deltaTime;
+        lastPosition = currentPosition;
+        
+        if (playerSpeed>0)
+        {
+            cameraShake.shouldShake = true;
+        }
+        else
+        {
+            cameraShake.shouldShake = false;
+        }
     }
 
 
