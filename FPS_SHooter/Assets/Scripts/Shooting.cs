@@ -18,8 +18,8 @@ public class Shooting : MonoBehaviour
 
     private int enemyDamage = 10;
 
-
-
+    [SerializeField]
+    private GameObject muzzelFlash;
 
     // Start is called before the first frame update
     void Start()
@@ -32,8 +32,14 @@ public class Shooting : MonoBehaviour
     {
         if(Input.GetButtonDown("Fire1"))
         {
+            muzzelFlash.SetActive(true);
             shoot();
         }
+        else
+        {
+            muzzelFlash.SetActive(false);
+        }
+
     }
 
    void shoot()
