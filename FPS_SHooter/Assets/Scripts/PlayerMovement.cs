@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private CameraShake cameraShake;
-    private float playerSpeed;
+    public float playerSpeed;
 
     private Vector3 lastPosition;
     private Vector3 currentPosition;
