@@ -29,6 +29,11 @@ public class Shooting : MonoBehaviour
     [SerializeField]
     private bool firing = false;
 
+    private float nextFire;
+
+    [SerializeField]
+    private float fireRate = 0.25f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,8 +46,9 @@ public class Shooting : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if(Input.GetButtonDown("Fire1") && Time.time > nextFire)
         {
+            nextFire = Time.time + fireRate;
 
             muzzelFlash.SetActive(true);
             firing = true;
