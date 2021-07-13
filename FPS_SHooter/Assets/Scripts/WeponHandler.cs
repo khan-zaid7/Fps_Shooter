@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WeponHandler : MonoBehaviour
 {
@@ -11,10 +12,20 @@ public class WeponHandler : MonoBehaviour
 
     [SerializeField]
     private int totalWepons = 1;
+
+    [SerializeField]
+    private Text TotalAmmoTxt;
+
+    [SerializeField]
+    private Text CurrentAmmoText;
+
     // Start is called before the first frame update
     void Start()
     {
+        AmmoAndReload am = wepons[currentWepon].GetComponent<AmmoAndReload>();
 
+        TotalAmmoTxt.text = am.fullAmmo.ToString();
+        CurrentAmmoText.text = am.currentAmmo.ToString();
         //loop through each wepon and disble them at the start
         foreach(GameObject i in wepons)
         {
@@ -29,6 +40,10 @@ public class WeponHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        AmmoAndReload am = wepons[currentWepon].GetComponent<AmmoAndReload>();
+
+        TotalAmmoTxt.text = am.fullAmmo.ToString();
+        CurrentAmmoText.text = am.currentAmmo.ToString();
         //call the switchwepon function
         switchWepon();
     }
