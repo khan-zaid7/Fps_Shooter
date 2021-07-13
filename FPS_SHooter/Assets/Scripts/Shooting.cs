@@ -49,7 +49,6 @@ public class Shooting : MonoBehaviour
     [SerializeField]
     private AmmoAndReload ammoAndReload;
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -67,7 +66,7 @@ public class Shooting : MonoBehaviour
     void FixedUpdate()
     {
         //if the player press mouse[0] key and time is greater then the next fire and Current ammo is greater then 0
-        if(Input.GetButtonDown("Fire1") && Time.time > nextFire && ammoAndReload.currentAmmo > 0)
+        if(Input.GetButton("Fire1") && Time.time > nextFire && ammoAndReload.currentAmmo > 0)
         {
             //increment the nextFire with the curentTime passed + fireRate 
             nextFire = Time.time + fireRate;
@@ -93,7 +92,7 @@ public class Shooting : MonoBehaviour
         }
         
         //if the ammoAndReload.currentAmmo is less then 30  
-        if (ammoAndReload.currentAmmo < 30)
+        if (ammoAndReload.currentAmmo < ammoAndReload.fullAmmo)
         {
             //if user presses the R key 
             if(Input.GetKeyDown(KeyCode.R))

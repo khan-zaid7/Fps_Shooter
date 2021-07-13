@@ -7,6 +7,10 @@ public class AmmoAndReload : MonoBehaviour
 
     public int currentAmmo;
     public int lowAmmo = 0; 
+
+    //refernce to the HUD image 
+    [SerializeField]
+    public Sprite image;
     // Start is called before the first frame update
     void Start()
     {

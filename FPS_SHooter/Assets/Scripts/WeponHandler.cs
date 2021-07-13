@@ -5,27 +5,44 @@ using UnityEngine.UI;
 
 public class WeponHandler : MonoBehaviour
 {
+    //the currentWepon value in the array of wepons 
     private int currentWepon=0;
 
+    //array of wepons gameObject
     [SerializeField]
     private GameObject[] wepons;
 
+    //total number of wepons
     [SerializeField]
     private int totalWepons = 1;
 
+    //refrence to the totaLAmmoText UI element 
     [SerializeField]
     private Text TotalAmmoTxt;
 
+    //refrence to the totaLAmmoText UI element
     [SerializeField]
     private Text CurrentAmmoText;
+
+    //refrence to the currentWepon image UI element
+    [SerializeField]
+    private Image img;
 
     // Start is called before the first frame update
     void Start()
     {
+        //get the Ammo reload script attached to the current wepon
         AmmoAndReload am = wepons[currentWepon].GetComponent<AmmoAndReload>();
 
+        //set the totalAmmo UI element equal to the currentWepon's AmmoAndReload script's fullAmmo var value
         TotalAmmoTxt.text = am.fullAmmo.ToString();
+
+        //set the currentAmmo UI element equal to the currentWepon's AmmoAndReload script's currentAmmo var value
         CurrentAmmoText.text = am.currentAmmo.ToString();
+
+        //set the currentWepon UI image equal to the currentWepon's  AmmoAndReload script's image  var value
+        img.sprite = am.image;
+
         //loop through each wepon and disble them at the start
         foreach(GameObject i in wepons)
         {
@@ -40,12 +57,17 @@ public class WeponHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AmmoAndReload am = wepons[currentWepon].GetComponent<AmmoAndReload>();
-
-        TotalAmmoTxt.text = am.fullAmmo.ToString();
-        CurrentAmmoText.text = am.currentAmmo.ToString();
+        
         //call the switchwepon function
         switchWepon();
+        AmmoAndReload am = wepons[currentWepon].GetComponent<AmmoAndReload>();
+        Debug.Log(currentWepon);
+        
+        TotalAmmoTxt.text = am.fullAmmo.ToString();
+        CurrentAmmoText.text = am.currentAmmo.ToString();
+        img.sprite = am.image;
+
+
     }
 
     void switchWepon()
