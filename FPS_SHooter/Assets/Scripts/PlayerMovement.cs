@@ -87,6 +87,15 @@ public class PlayerMovement : MonoBehaviour
     //Add a recoil on the up when a player shoots, value differs for differnt guns
     [HideInInspector]
     public float upRecoilMultiplier = 0;
+
+
+    //Stairs Gravity
+
+    public bool onStaris = false;
+
+    public float gravityOnStairs;
+
+    public LayerMask whereIsStairs;
     void Start()
     {
         //get refrence to the main camera Object
@@ -109,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
 
         player_move();
 
-        
+        StairsCheck();
         Gravity();
         GroundCheck();
         shakeCameraOnMove();
@@ -189,14 +198,9 @@ public class PlayerMovement : MonoBehaviour
     void Gravity() 
     {
         if(isGrounded)
-        {
             Velocity.y = 0;
-
-        }
         else 
-        {
             Velocity.y -= gravityForce * Time.deltaTime;
-        }
 
         ch.Move(Velocity * Time.deltaTime);
     }
@@ -207,11 +211,18 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = Physics.CheckSphere(GroundCheckPosition.position, sphereRadious, whatIsGround);
     }
 
+    void StairsCheck()
+    {
+        onStaris = Physics.CheckSphere(GroundCheckPosition.position, sphereRadious, whereIsStairs);
+
+        if(onStaris)
+            gravityForce = gravityOnStairs;
+    }
+
     bool getRunKey()
     {
        return Input.GetKeyDown(KeyCode.LeftShift);
     }
-
 
 
     void shakeCameraOnMove()
