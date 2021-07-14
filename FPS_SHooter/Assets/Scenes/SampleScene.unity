@@ -3707,6 +3707,8 @@ MonoBehaviour:
   firing: 0
   fireRate: 0.5
   ammoAndReload: {fileID: 607594413}
+  upRecoil: 3
+  sideReciol: 0.5
 --- !u!114 &607594413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16793,6 +16795,8 @@ MonoBehaviour:
   GroundCheckPosition: {fileID: 1162975458}
   cameraShake: {fileID: 0}
   playerSpeed: 0
+  sideRecoilMultiplier: 0
+  upRecoilMultiplier: 0
 --- !u!143 &2095002987
 CharacterController:
   m_ObjectHideFlags: 0
@@ -17401,6 +17405,8 @@ MonoBehaviour:
   firing: 0
   fireRate: 0.1
   ammoAndReload: {fileID: 1135221546868875598}
+  upRecoil: 4
+  sideReciol: 1
 --- !u!4 &1268906959449017214
 Transform:
   m_ObjectHideFlags: 0

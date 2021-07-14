@@ -80,7 +80,13 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 lastPosition;
     private Vector3 currentPosition;
 
+    //Add a recoil on the sides when a player shoots, value differs for differnt guns
+    [HideInInspector]
+    public float sideRecoilMultiplier = 0;
 
+    //Add a recoil on the up when a player shoots, value differs for differnt guns
+    [HideInInspector]
+    public float upRecoilMultiplier = 0;
     void Start()
     {
         //get refrence to the main camera Object
@@ -113,11 +119,11 @@ public class PlayerMovement : MonoBehaviour
     void player_rotate()
 
     {
-        //Get the mouse input on the xAxis
-        mouseX = Input.GetAxis("Mouse X") * horizontalSpeed;
+        //Get the mouse input on the xAxis and add sideRecoil only when player shoots 
+        mouseX = sideRecoilMultiplier + Input.GetAxis("Mouse X") * horizontalSpeed;
 
-        //Get the mouse input on the yAxis
-        mouseY = Input.GetAxis("Mouse Y") * verticalSpeed;
+        //Get the mouse input on the yAxis and add up recoil only when player shoots 
+        mouseY = upRecoilMultiplier +  Input.GetAxis("Mouse Y") * verticalSpeed;
 
         //Rotate the player gameObject with the mouseX movement to face the camera's direction
         tr.Rotate(Vector3.up * mouseX);
@@ -131,6 +137,12 @@ public class PlayerMovement : MonoBehaviour
 
         //rotate the camera gameObject on the x and y axis 
         cam.transform.eulerAngles = new Vector3(xRotation, yRotation, 0.0f);
+
+        //make the sideRecoil back to  0 once the bullet is shooted
+        sideRecoilMultiplier = 0;
+
+        //make the upRecoil back to  0 once the bullet is shooted
+        upRecoilMultiplier = 0;
     }
 
     //responsible for player movement 

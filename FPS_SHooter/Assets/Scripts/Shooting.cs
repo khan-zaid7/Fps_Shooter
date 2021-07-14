@@ -50,6 +50,14 @@ public class Shooting : MonoBehaviour
     [SerializeField]
     private AmmoAndReload ammoAndReload;
 
+    //the recoil on up dir applied when plyaer shoots
+    [SerializeField]
+    private float upRecoil;
+
+    //the recoil on side dir applied when player shoots
+    [SerializeField]
+    private float sideReciol;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +79,12 @@ public class Shooting : MonoBehaviour
         {
             //increment the nextFire with the curentTime passed + fireRate 
             nextFire = Time.time + fireRate;
+
+            //assign the sideRecoil value to PlayerMovemnt Script's sideRecoilMultiplier
+            pl.sideRecoilMultiplier = sideReciol;
+
+            //assign the upRecoil value to PlayerMovemnt Script's upRecoilMultiplier
+            pl.upRecoilMultiplier = upRecoil ;
 
             //acitivate the muzzel flash particle when the player shoots 
             muzzelFlash.SetActive(true);
