@@ -13,8 +13,8 @@ public class WeponHandler : MonoBehaviour
     private GameObject[] wepons;
 
     //total number of wepons
-    [SerializeField]
-    private int totalWepons = 1;
+    
+    private int totalWepons;
 
     //refrence to the totaLAmmoText UI element 
     [SerializeField]
@@ -31,6 +31,8 @@ public class WeponHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        totalWepons = wepons.Length ;
+        
         //get the Ammo reload script attached to the current wepon
         AmmoAndReload am = wepons[currentWepon].GetComponent<AmmoAndReload>();
 
@@ -57,11 +59,11 @@ public class WeponHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        totalWepons = wepons.Length;
+
         //call the switchwepon function
         switchWepon();
         AmmoAndReload am = wepons[currentWepon].GetComponent<AmmoAndReload>();
-        Debug.Log(currentWepon);
         
         TotalAmmoTxt.text = am.fullAmmo.ToString();
         CurrentAmmoText.text = am.currentAmmo.ToString();
@@ -84,18 +86,11 @@ public class WeponHandler : MonoBehaviour
                 //increment the current wepon on scroll down
                 currentWepon ++;
 
+                //if cuurentWepon become greater or equal to the totalWepon 
+                if(currentWepon >= totalWepons)
+                    currentWepon = 0;
+
                 //acticate the new current wepon
-                wepons[currentWepon].SetActive(true);
-            }
-            //if the currentWepon counter var becomes greater then totalWepon
-            else
-            {
-                //disable the selected wepon
-                wepons[currentWepon].SetActive(false);
-                
-                //set cuurentwepon index to zero
-                currentWepon = 0;
-                //activate the first wepon on the array
                 wepons[currentWepon].SetActive(true);
             }
         }
@@ -104,7 +99,7 @@ public class WeponHandler : MonoBehaviour
         if(Input.GetAxis("Mouse ScrollWheel")>0)
         {
             //if the value of current weapon is greater then the 0
-            if(currentWepon > 0)
+            if(currentWepon >= 0)
             {
                 //disable the current selected wepon on the screen
                 wepons[currentWepon].SetActive(false);
@@ -112,21 +107,14 @@ public class WeponHandler : MonoBehaviour
                 //decrement the current wepon on scroll up
                 currentWepon --;
 
+                if(currentWepon < 0)
+                    currentWepon = totalWepons -1;
+
+                    
                 //acticate the new current wepon
                 wepons[currentWepon].SetActive(true);
             }
-            //if the currentWepon counter var becomes smaller then 0
-            else
-            {
-                //disable the selected wepon
-                wepons[currentWepon].SetActive(false);
-                
-                //set cuurentwepon value to totalwepon value
-                currentWepon = totalWepons;
 
-                //activate the first wepon on the array
-                wepons[currentWepon].SetActive(true);
-            }
         }
     }
 }

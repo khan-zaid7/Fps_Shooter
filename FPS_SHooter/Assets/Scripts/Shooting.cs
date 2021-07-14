@@ -21,6 +21,7 @@ public class Shooting : MonoBehaviour
     private Transform muzzelPosition;
 
     //how much health is deducted when raycast hits the enemy 
+    [SerializeField]
     private int enemyDamage = 10;
 
     //the refrence to the fire partile
