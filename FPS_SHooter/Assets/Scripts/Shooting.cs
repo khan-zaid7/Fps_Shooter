@@ -86,6 +86,8 @@ public class Shooting : MonoBehaviour
             //assign the upRecoil value to PlayerMovemnt Script's upRecoilMultiplier
             pl.upRecoilMultiplier = upRecoil ;
 
+            
+
             //acitivate the muzzel flash particle when the player shoots 
             muzzelFlash.SetActive(true);
 
@@ -97,6 +99,8 @@ public class Shooting : MonoBehaviour
 
             //decrement the cuurentAmmo
             ammoAndReload.currentAmmo --;
+                
+            Debug.Log(ammoAndReload.totalAmmo);
         
         }
         else
@@ -106,14 +110,17 @@ public class Shooting : MonoBehaviour
             
         }
         
-        //if the ammoAndReload.currentAmmo is less then 30  
-        if (ammoAndReload.currentAmmo < ammoAndReload.fullAmmo)
+        //if the ammoAndReload.currentAmmo is less then 30  and totalAmmo is greater then 0
+        if (ammoAndReload.currentAmmo < ammoAndReload.magazineCapacity)
         {
             //if user presses the R key 
             if(Input.GetKeyDown(KeyCode.R))
             {
-                //call the reload function defined in the ammoAndReload script 
-                ammoAndReload.reload();
+                
+                if (ammoAndReload.totalAmmo>ammoAndReload.lowAmmo)
+                    //call the reload function defined in the ammoAndReload script 
+                    ammoAndReload.reload();
+                
             } 
         }
         //play the player run andimation relative to the player speed  var defined in the playerMovement script  

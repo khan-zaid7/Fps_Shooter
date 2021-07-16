@@ -16,9 +16,13 @@ public class WeponHandler : MonoBehaviour
     
     private int totalWepons;
 
-    //refrence to the totaLAmmoText UI element 
+    //refrence to the magazineCapityText UI element 
     [SerializeField]
-    private Text TotalAmmoTxt;
+    private Text magCapacityTxt;
+
+    //A refrence to the totalAmmoText UI element 
+    [SerializeField]
+    private Text totalAmmoTxt;
 
     //refrence to the totaLAmmoText UI element
     [SerializeField]
@@ -36,8 +40,11 @@ public class WeponHandler : MonoBehaviour
         //get the Ammo reload script attached to the current wepon
         AmmoAndReload am = wepons[currentWepon].GetComponent<AmmoAndReload>();
 
-        //set the totalAmmo UI element equal to the currentWepon's AmmoAndReload script's fullAmmo var value
-        TotalAmmoTxt.text = am.fullAmmo.ToString();
+        //set the magazineCapacity UI element equal to the currentWepon's AmmoAndReload script's fullAmmo var value
+        magCapacityTxt.text = am.magazineCapacity.ToString();
+
+        //set the magazineCapacity UI element equal to the currentWepon's AmmoAndReload script's fullAmmo var value
+        totalAmmoTxt.text = am.totalAmmo.ToString();
 
         //set the currentAmmo UI element equal to the currentWepon's AmmoAndReload script's currentAmmo var value
         CurrentAmmoText.text = am.currentAmmo.ToString();
@@ -64,8 +71,8 @@ public class WeponHandler : MonoBehaviour
         //call the switchwepon function
         switchWepon();
         AmmoAndReload am = wepons[currentWepon].GetComponent<AmmoAndReload>();
-        
-        TotalAmmoTxt.text = am.fullAmmo.ToString();
+        totalAmmoTxt.text = am.totalAmmo.ToString();
+        magCapacityTxt.text = am.magazineCapacity.ToString();
         CurrentAmmoText.text = am.currentAmmo.ToString();
         img.sprite = am.image;
 
