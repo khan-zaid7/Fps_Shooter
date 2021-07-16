@@ -151,13 +151,15 @@ public class Shooting : MonoBehaviour
             //????
             //get the enemy script for the hit enemy Object
             enemyScript em = hit.transform.GetComponent<enemyScript>();
+            Rigidbody rb = hit.transform.GetComponent<Rigidbody>();
             
             //if ray hits the emeny and stores the refrence in the em 
-            if(em != null)
+            if(em != null && rb != null)
             {
+                rb.AddForce(Vector3.left * 100);
                 //calling the damage function defined in the enemeyScript and passing the enemyDamage value 
-                em.Damage(enemyDamage);
-                
+                em.Damage(enemyDamage);   
+
             }
         }
     }

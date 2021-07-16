@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public class WeponHandler : MonoBehaviour
 {
@@ -18,15 +20,15 @@ public class WeponHandler : MonoBehaviour
 
     //refrence to the magazineCapityText UI element 
     [SerializeField]
-    private Text magCapacityTxt;
+    private TextMeshProUGUI magCapacityTxt;
 
     //A refrence to the totalAmmoText UI element 
     [SerializeField]
-    private Text totalAmmoTxt;
+    private TextMeshProUGUI totalAmmoTxt;
 
     //refrence to the totaLAmmoText UI element
     [SerializeField]
-    private Text CurrentAmmoText;
+    private TextMeshProUGUI CurrentAmmoText;
 
     //refrence to the currentWepon image UI element
     [SerializeField]
@@ -99,6 +101,8 @@ public class WeponHandler : MonoBehaviour
         }
         else 
         {
+            Sprite im = wepons[currentWepon].GetComponent<Image>().sprite;
+            img.sprite = im;
             magCapacityTxt.enabled = false;
             totalAmmoTxt.enabled = false;
             CurrentAmmoText.enabled = false;

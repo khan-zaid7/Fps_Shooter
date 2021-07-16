@@ -25,11 +25,6 @@ public class enemyScript : MonoBehaviour
         if(currentHealth <=0)
         {
             Destroy(gameObject);
-            if (Time.time > nextTime)
-            {
-                nextTime = Time.time + targetReapperTime;
-                instanciateGameObject();
-            }
                
         }
     }
