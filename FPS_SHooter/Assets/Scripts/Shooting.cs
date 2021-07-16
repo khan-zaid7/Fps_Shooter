@@ -123,11 +123,16 @@ public class Shooting : MonoBehaviour
                 
             } 
         }
-        //play the player run andimation relative to the player speed  var defined in the playerMovement script  
-        animator.SetFloat("Speed", pl.playerSpeed);
+
+        if(animator != null)
+        {
+            //play the player run andimation relative to the player speed  var defined in the playerMovement script  
+            animator.SetFloat("Speed", pl.playerSpeed);
         
-        //play the firing animation 
-        animator.SetBool("isFire",firing);
+            //play the firing animation 
+            animator.SetBool("isFire",firing);
+        }
+
         
         //firing becomes false 
         firing =false;
